@@ -1,1 +1,156 @@
-index.html
+<!doctype html>
+<html lang="nl">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Van Appiah Showcase Dashboard</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Fraunces:wght@600;700&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+        :root { --vh: 1vh; }
+        body { font-family: 'DM Sans', sans-serif; }
+        .font-display { font-family: 'Fraunces', serif; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card-anim { animation: fadeUp 0.5s ease-out both; }
+        .card-anim:nth-child(1) { animation-delay: 0.05s; }
+        .card-anim:nth-child(2) { animation-delay: 0.1s; }
+        .card-anim:nth-child(3) { animation-delay: 0.15s; }
+        .card-anim:nth-child(4) { animation-delay: 0.2s; }
+        .card-anim:nth-child(5) { animation-delay: 0.25s; }
+        .card-anim:nth-child(6) { animation-delay: 0.3s; }
+
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .project-card img {
+            transition: transform 0.4s ease;
+        }
+        .project-card:hover img {
+            transform: scale(1.06);
+        }
+        .filter-btn { transition: all 0.2s ease; }
+        .filter-btn.active-filter {
+            background: #c8a96e !important;
+            color: #0a0a0a !important;
+        }
+    </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+ </head>
+ <body data-template-id="__page-root" class="min-h-screen w-full">
+  <header class="w-full border-b border-white/10">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div>
+     <h1 data-template-id="dashboard-title" class="canva-text font-display"></h1>
+     <p data-template-id="dashboard-subtitle" class="canva-text mt-1 opacity-60"></p>
+    </div>
+    <div class="relative w-full sm:w-72">
+     <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40"></i> <input data-template-id="search-input" id="search-input" type="text" class="canva-input w-full pl-10 pr-4 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white/90 text-sm focus:outline-none focus:border-[#c8a96e]/50 focus:ring-1 focus:ring-[#c8a96e]/30">
+    </div>
+   </div>
+  </header>
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+   <!-- Filters -->
+   <div class="flex flex-wrap gap-2 mb-4" id="status-filters" role="group" aria-label="Status filters">
+    <button class="filter-btn active-filter px-4 py-1.5 rounded-full text-xs font-medium bg-white/5 text-white/70 border border-white/10" data-status="all">All</button> <button class="filter-btn px-4 py-1.5 rounded-full text-xs font-medium bg-white/5 text-white/70 border border-white/10" data-status="active">Active</button> <button class="filter-btn px-4 py-1.5 rounded-full text-xs font-medium bg-white/5 text-white/70 border border-white/10" data-status="in-progress">In Progress</button> <button class="filter-btn px-4 py-1.5 rounded-full text-xs font-medium bg-white/5 text-white/70 border border-white/10" data-status="completed">Completed</button>
+   </div>
+   <div class="flex flex-wrap gap-2 mb-8" id="tag-filters" role="group" aria-label="Tag filters">
+    <button class="filter-btn active-filter px-3 py-1 rounded-full text-[11px] font-medium bg-white/5 text-white/50 border border-white/10" data-tag="all">All Tags</button> <button class="filter-btn px-3 py-1 rounded-full text-[11px] font-medium bg-white/5 text-white/50 border border-white/10" data-tag="web">Web</button> <button class="filter-btn px-3 py-1 rounded-full text-[11px] font-medium bg-white/5 text-white/50 border border-white/10" data-tag="branding">Branding</button> <button class="filter-btn px-3 py-1 rounded-full text-[11px] font-medium bg-white/5 text-white/50 border border-white/10" data-tag="e-commerce">E-commerce</button> <button class="filter-btn px-3 py-1 rounded-full text-[11px] font-medium bg-white/5 text-white/50 border border-white/10" data-tag="marketing">Marketing</button>
+   </div>
+   <h2 data-template-id="section-title" class="canva-text font-display mb-6"></h2><!-- Project Grid -->
+   <div id="project-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Project 1: Van Appiah Media Bureau --> <a href="vanappiahmedia.html" target="_blank" rel="noopener noreferrer" class="project-card card-anim rounded-2xl overflow-hidden border border-white/10 block" data-project-status="active" data-project-tags="web,branding,marketing" data-project-name="Van Appiah Media Bureau" data-project-desc="Full-service creative media bureau — branding, web &amp; marketing">
+     <div class="h-44 overflow-hidden">
+      <img data-template-id="proj1-img" class="canva-image w-full h-full object-cover" loading="lazy">
+     </div>
+     <div data-template-id="proj1-card" class="canva-card p-5">
+      <div class="flex items-center justify-between mb-2">
+       <h3 data-template-id="proj1-name" class="canva-text font-bold"></h3><span class="status-badge px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-emerald-500/20 text-emerald-400">Active</span>
+      </div>
+      <p data-template-id="proj1-desc" class="canva-text text-sm opacity-50 mb-3"></p>
+      <div class="flex gap-1.5">
+       <span class="px-2 py-0.5 rounded text-[10px] bg-white/5 text-white/40">Web</span> <span class="px-2 py-0.5 rounded text-[10px] bg-white/5 text-white/40">Branding</span> <span class="px-2 py-0.5 rounded text-[10px] bg-white/5 text-white/40">Marketing</span>
+      </div>
+     </div></a> <!-- Project 2: Van Appiah Automotive --> <a href="appiahautomotive.html" target="_blank" rel="noopener noreferrer" class="project-card card-anim rounded-2xl overflow-hidden border border-white/10 block" data-project-status="active" data-project-tags="automotive,web" data-project-name="Van Appiah Automotive" data-project-desc="Luxury automotive showroom &amp; mobile-first experience">
+     <div class="h-44 overflow-hidden">
+      <img data-template-id="proj2-img" class="canva-image w-full h-full object-cover" loading="lazy">
+     </div>
+     <div data-template-id="proj2-card" class="canva-card p-5">
+      <div class="flex items-center justify-between mb-2">
+       <h3 data-template-id="proj2-name" class="canva-text font-bold"></h3><span class="status-badge px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-emerald-500/20 text-emerald-400">Active</span>
+      </div>
+      <p data-template-id="proj2-desc" class="canva-text text-sm opacity-50 mb-3"></p>
+      <div class="flex gap-1.5">
+       <span class="px-2 py-0.5 rounded text-[10px] bg-white/5 text-white/40">Automotive</span> <span class="px-2 py-0.5 rounded text-[10px] bg-white/5 text-white/40">Web</span>
+      </div>
+     </div></a>
+   </div><!-- Empty state -->
+   <p id="no-results" class="hidden text-white/30 text-center py-16 text-sm">Geen projecten gevonden.</p>
+  </main>
+  <footer class="w-full border-t border-white/10 mt-12">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between">
+    <p data-template-id="footer-text" class="canva-text text-xs opacity-30"></p>
+    <div class="flex items-center gap-1 opacity-30">
+     <i data-lucide="diamond" class="w-3 h-3 text-[#c8a96e]"></i> <span class="text-[10px] text-white/50 uppercase tracking-widest">Van Appiah</span>
+    </div>
+   </div>
+  </footer>
+  <script src="/_sdk/editing_sdk.js"></script>
+  <script>
+        lucide.createIcons();
+
+        let activeStatus = 'all';
+        let activeTag = 'all';
+        const searchInput = document.getElementById('search-input');
+        const cards = document.querySelectorAll('#project-grid > *');
+        const noResults = document.getElementById('no-results');
+
+        function filterCards() {
+            const query = searchInput.value.toLowerCase().trim();
+            let visible = 0;
+            cards.forEach(card => {
+                const status = card.dataset.projectStatus;
+                const tags = card.dataset.projectTags || '';
+                const name = (card.dataset.projectName || '').toLowerCase();
+                const desc = (card.dataset.projectDesc || '').toLowerCase();
+                const matchStatus = activeStatus === 'all' || status === activeStatus;
+                const matchTag = activeTag === 'all' || tags.split(',').includes(activeTag);
+                const matchSearch = !query || name.includes(query) || desc.includes(query);
+                const show = matchStatus && matchTag && matchSearch;
+                card.style.display = show ? '' : 'none';
+                if (show) visible++;
+            });
+            noResults.classList.toggle('hidden', visible > 0);
+        }
+
+        document.getElementById('status-filters').addEventListener('click', e => {
+            const btn = e.target.closest('[data-status]');
+            if (!btn) return;
+            activeStatus = btn.dataset.status;
+            document.querySelectorAll('#status-filters .filter-btn').forEach(b => b.classList.remove('active-filter'));
+            btn.classList.add('active-filter');
+            filterCards();
+        });
+
+        document.getElementById('tag-filters').addEventListener('click', e => {
+            const btn = e.target.closest('[data-tag]');
+            if (!btn) return;
+            activeTag = btn.dataset.tag;
+            document.querySelectorAll('#tag-filters .filter-btn').forEach(b => b.classList.remove('active-filter'));
+            btn.classList.add('active-filter');
+            filterCards();
+        });
+
+        searchInput.addEventListener('input', filterCards);
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fa4d375c0aef5e2',t:'MTc3ODU0MDcwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
