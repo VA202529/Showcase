@@ -1,0 +1,1069 @@
+<!doctype html>
+<html lang="nl">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appiah Automotive</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Playfair+Display:wght@400;700&amp;display=swap" rel="stylesheet">
+  <style>
+:root{--dark:#0a0a0f;--dark-card:#12121a;--dark-surface:#1a1a26;--silver:#c0c0c8;--accent:#3b82f6;--accent-dim:rgba(59,130,246,0.15);--gold:#d4af37}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--dark);color:#e4e4ec;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Playfair Display',serif}
+
+.nav-wrap{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .3s,backdrop-filter .3s}
+.nav-wrap.scrolled{background:rgba(10,10,15,0.92);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,0.06)}
+
+.fade-up{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+.card-hover{transition:transform .35s ease,box-shadow .35s ease}
+.card-hover:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(59,130,246,0.12)}
+.glass{background:rgba(255,255,255,0.04);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08)}
+
+.btn-primary{background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;padding:14px 32px;border-radius:8px;font-weight:700;transition:all .3s;border:none;cursor:pointer;font-size:1rem;display:inline-block;text-align:center;text-decoration:none}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(59,130,246,0.35)}
+.btn-primary:disabled{opacity:.5;pointer-events:none}
+.btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.25);color:#fff;padding:14px 32px;border-radius:8px;font-weight:500;transition:all .3s;cursor:pointer;font-size:1rem;display:inline-block;text-align:center;text-decoration:none}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+
+.hero-section{position:relative;min-height:calc(100 * min(var(--vh,1vh),1vh));display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,15,0.5) 0%,rgba(10,10,15,0.9) 100%);z-index:1}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .1s ease-out}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 1.5rem}
+
+.scroll-ind{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(12px)}}
+
+.stat-num{font-size:2.5rem;font-weight:700;color:#fff;font-family:'Playfair Display',serif}
+
+.car-card{background:var(--dark-card);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);transition:opacity .4s,transform .4s}
+.car-card img{height:220px;width:100%;object-fit:cover;transition:transform .5s}
+.car-card:hover img{transform:scale(1.05)}
+.car-card.hidden-card{opacity:0;transform:scale(0.95);position:absolute;pointer-events:none}
+
+.content-card{border-radius:16px;overflow:hidden;position:relative;aspect-ratio:9/16;max-height:360px;cursor:pointer}
+.content-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.content-card:hover img{transform:scale(1.08)}
+.content-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.7) 0%,transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:1rem}
+
+.review-track{display:flex;transition:transform .5s ease}
+.review-slide{min-width:100%;padding:0 1rem}
+
+.form-input{background:var(--dark-surface);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px 16px;color:#fff;width:100%;font-size:1rem;transition:border-color .3s}
+.form-input:focus{outline:none;border-color:var(--accent)}
+.form-input::placeholder{color:rgba(255,255,255,0.35)}
+
+.blog-card{border-radius:16px;overflow:hidden;background:var(--dark-card);border:1px solid rgba(255,255,255,0.06);cursor:pointer}
+.blog-card img{height:200px;width:100%;object-fit:cover;transition:transform .5s}
+.blog-card:hover img{transform:scale(1.05)}
+
+.filter-select{background:var(--dark-surface);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:10px 14px;color:#fff;font-size:.9rem;cursor:pointer}
+.filter-select:focus{outline:none;border-color:var(--accent)}
+
+.why-card{background:var(--dark-card);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:2rem;text-align:center;transition:border-color .3s,transform .35s}
+.why-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+
+.mobile-menu{position:fixed;inset:0;background:rgba(10,10,15,0.97);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transform:translateX(100%);transition:transform .4s ease}
+.mobile-menu.open{transform:translateX(0)}
+
+.cta-section{position:relative;overflow:hidden}
+.cta-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.3}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:300;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;padding:1rem}
+.modal-overlay.active{opacity:1;pointer-events:auto}
+.modal-content{background:var(--dark-card);border-radius:16px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;position:relative;border:1px solid rgba(255,255,255,0.08)}
+.modal-close{position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,0.1);border:none;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:background .2s}
+.modal-close:hover{background:rgba(255,255,255,0.2)}
+
+/* Image slider */
+.slider-wrap{position:relative;overflow:hidden;border-radius:16px 16px 0 0}
+.slider-track{display:flex;transition:transform .4s ease}
+.slider-track img{min-width:100%;height:300px;object-fit:cover}
+.slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);border:none;color:#fff;width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5}
+.slider-btn:hover{background:rgba(0,0,0,0.7)}
+
+/* Dots */
+.rev-dots{display:flex;gap:8px;justify-content:center;margin-top:1rem}
+.rev-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.2);border:none;cursor:pointer;transition:background .3s}
+.rev-dot.active{background:var(--accent)}
+
+/* Like anim */
+@keyframes likePopup{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
+.like-anim{animation:likePopup .4s ease}
+
+/* Multi-step */
+.step-panel{display:none}
+.step-panel.active{display:block}
+
+/* Drag drop */
+.drop-zone{border:2px dashed rgba(255,255,255,0.15);border-radius:12px;padding:2rem;text-align:center;transition:border-color .3s,background .3s;cursor:pointer}
+.drop-zone.dragover{border-color:var(--accent);background:rgba(59,130,246,0.08)}
+
+/* Back to top */
+#back-to-top{position:fixed;bottom:2rem;right:2rem;z-index:150;background:var(--accent);color:#fff;width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s,transform .3s;transform:translateY(20px)}
+#back-to-top.show{opacity:1;transform:translateY(0)}
+
+/* Bookmark */
+.bookmarked{color:#d4af37!important}
+
+/* Search input */
+.search-input{background:var(--dark-surface);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:10px 14px 10px 40px;color:#fff;font-size:.9rem;width:100%;max-width:300px}
+.search-input:focus{outline:none;border-color:var(--accent)}
+
+@media(max-width:768px){
+  .stat-num{font-size:2rem}
+  .content-card{max-height:280px}
+  .slider-track img{height:220px}
+}
+  </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+ </head>
+ <body data-template-id="__page-root"><!-- Navbar -->
+  <nav class="nav-wrap" id="navbar">
+   <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"><a href="#hero" data-template-id="nav-logo" class="canva-text text-xl font-bold tracking-wider" style="font-family:'Playfair Display',serif;"></a>
+    <div class="hidden md:flex items-center gap-8"><a href="#about" class="nav-link text-sm text-gray-300 hover:text-white transition">Over Ons</a> <a href="#aanbod" class="nav-link text-sm text-gray-300 hover:text-white transition">Aanbod</a> <a href="#content" class="nav-link text-sm text-gray-300 hover:text-white transition">Content</a> <a href="#educatie" class="nav-link text-sm text-gray-300 hover:text-white transition">Educatie</a> <a href="#reviews" class="nav-link text-sm text-gray-300 hover:text-white transition">Reviews</a> <a href="#contact" class="btn-primary text-sm !py-2 !px-6">Contact</a>
+    </div><button id="menu-btn" class="md:hidden text-white" aria-label="Menu"><i data-lucide="menu" style="width:28px;height:28px;"></i></button>
+   </div>
+  </nav><!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu"><button id="menu-close" class="absolute top-6 right-6 text-white" aria-label="Sluit menu"><i data-lucide="x" style="width:32px;height:32px;"></i></button> <a href="#about" class="text-2xl text-white mob-link">Over Ons</a> <a href="#aanbod" class="text-2xl text-white mob-link">Aanbod</a> <a href="#content" class="text-2xl text-white mob-link">Content</a> <a href="#educatie" class="text-2xl text-white mob-link">Educatie</a> <a href="#reviews" class="text-2xl text-white mob-link">Reviews</a> <a href="#contact" class="text-2xl text-white mob-link">Contact</a>
+  </div><!-- Hero -->
+  <section id="hero" class="hero-section"><img data-template-id="hero-bg" class="canva-image hero-img" id="hero-bg-img" loading="lazy">
+   <div class="hero-overlay"></div>
+   <div class="hero-content">
+    <p data-template-id="hero-tagline" class="canva-text text-sm uppercase tracking-[0.3em] text-blue-400 mb-4"></p>
+    <h1 data-template-id="hero-title" class="canva-text text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4 leading-tight"></h1>
+    <h2 data-template-id="hero-subtitle" class="canva-text text-base sm:text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed"></h2>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center"><a href="#aanbod" data-template-id="hero-btn-1" class="canva-button btn-primary"></a> <a href="#verkoop" data-template-id="hero-btn-2" class="canva-button btn-outline"></a>
+    </div>
+   </div>
+   <div class="scroll-ind text-white opacity-50">
+    <i data-lucide="chevron-down" style="width:32px;height:32px;"></i>
+   </div>
+  </section><!-- About -->
+  <section id="about" class="py-20 sm:py-24 px-6">
+   <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+     <div class="fade-up">
+      <p data-template-id="about-label" class="canva-text text-sm uppercase tracking-[0.2em] text-blue-400 mb-4"></p>
+      <h2 data-template-id="about-title" class="canva-text text-3xl sm:text-4xl font-bold text-white mb-6"></h2>
+      <p data-template-id="about-text" class="canva-text text-gray-400 leading-relaxed mb-4"></p>
+      <p data-template-id="about-text-2" class="canva-text text-gray-400 leading-relaxed"></p>
+     </div>
+     <div class="fade-up rounded-2xl overflow-hidden"><img data-template-id="about-img" class="canva-image w-full h-64 sm:h-80 object-cover rounded-2xl" loading="lazy">
+     </div>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20">
+     <div class="fade-up text-center">
+      <div class="stat-num" id="counter-1" data-target="150">
+       0
+      </div>
+      <p data-template-id="stat-1-label" class="canva-text text-gray-400 mt-2 text-sm"></p>
+     </div>
+     <div class="fade-up text-center">
+      <div class="stat-num" id="counter-2" data-target="500">
+       0
+      </div>
+      <p data-template-id="stat-2-label" class="canva-text text-gray-400 mt-2 text-sm"></p>
+     </div>
+     <div class="fade-up text-center">
+      <div class="stat-num" id="counter-3" data-target="300">
+       0
+      </div>
+      <p data-template-id="stat-3-label" class="canva-text text-gray-400 mt-2 text-sm"></p>
+     </div>
+     <div class="fade-up text-center">
+      <div class="stat-num" id="counter-4" data-target="49">
+       0
+      </div>
+      <p data-template-id="stat-4-label" class="canva-text text-gray-400 mt-2 text-sm"></p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Content / Social -->
+  <section id="content" class="py-20 sm:py-24 px-6" style="background:var(--dark-card);">
+   <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 fade-up">
+     <p data-template-id="content-label" class="canva-text text-sm uppercase tracking-[0.2em] text-blue-400 mb-4"></p>
+     <h2 data-template-id="content-title" class="canva-text text-3xl sm:text-4xl font-bold text-white mb-4"></h2>
+     <p data-template-id="content-subtitle" class="canva-text text-gray-400 max-w-xl mx-auto"></p>
+    </div>
+    <div class="flex justify-center gap-6 mb-12 fade-up">
+     <div class="glass rounded-full w-12 h-12 flex items-center justify-center text-blue-400 hover:bg-blue-500/20 transition cursor-pointer">
+      <i data-lucide="instagram" style="width:20px;height:20px;"></i>
+     </div>
+     <div class="glass rounded-full w-12 h-12 flex items-center justify-center text-blue-400 hover:bg-blue-500/20 transition cursor-pointer">
+      <i data-lucide="youtube" style="width:20px;height:20px;"></i>
+     </div>
+     <div class="glass rounded-full w-12 h-12 flex items-center justify-center text-blue-400 hover:bg-blue-500/20 transition cursor-pointer">
+      <i data-lucide="facebook" style="width:20px;height:20px;"></i>
+     </div>
+     <div class="glass rounded-full w-12 h-12 flex items-center justify-center text-blue-400 hover:bg-blue-500/20 transition cursor-pointer">
+      <i data-lucide="video" style="width:20px;height:20px;"></i>
+     </div>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+     <div class="content-card card-hover fade-up" data-video-id="0"><img data-template-id="content-card-1-img" class="canva-image" loading="lazy">
+      <div class="content-overlay">
+       <p data-template-id="content-card-1-text" class="canva-text text-white text-sm font-bold"></p><span class="text-gray-300 text-xs mt-1 flex items-center gap-1"><i data-lucide="play" style="width:12px;height:12px;"></i> 24K views</span>
+      </div>
+     </div>
+     <div class="content-card card-hover fade-up" data-video-id="1"><img data-template-id="content-card-2-img" class="canva-image" loading="lazy">
+      <div class="content-overlay">
+       <p data-template-id="content-card-2-text" class="canva-text text-white text-sm font-bold"></p><span class="text-gray-300 text-xs mt-1 flex items-center gap-1"><i data-lucide="play" style="width:12px;height:12px;"></i> 18K views</span>
+      </div>
+     </div>
+     <div class="content-card card-hover fade-up" data-video-id="2"><img data-template-id="content-card-3-img" class="canva-image" loading="lazy">
+      <div class="content-overlay">
+       <p data-template-id="content-card-3-text" class="canva-text text-white text-sm font-bold"></p><span class="text-gray-300 text-xs mt-1 flex items-center gap-1"><i data-lucide="play" style="width:12px;height:12px;"></i> 31K views</span>
+      </div>
+     </div>
+     <div class="content-card card-hover fade-up" data-video-id="3"><img data-template-id="content-card-4-img" class="canva-image" loading="lazy">
+      <div class="content-overlay">
+       <p data-template-id="content-card-4-text" class="canva-text text-white text-sm font-bold"></p><span class="text-gray-300 text-xs mt-1 flex items-center gap-1"><i data-lucide="play" style="width:12px;height:12px;"></i> 12K views</span>
+      </div>
+     </div>
+    </div>
+    <div class="text-center mt-10 fade-up"><a href="#" target="_blank" rel="noopener noreferrer" data-template-id="content-btn" class="canva-button btn-primary inline-block"></a>
+    </div>
+   </div>
+  </section><!-- Video Modal -->
+  <div class="modal-overlay" id="video-modal">
+   <div class="modal-content" style="max-width:500px;"><button class="modal-close" onclick="closeModal('video-modal')" aria-label="Sluiten"><i data-lucide="x" style="width:18px;height:18px;"></i></button>
+    <div id="video-modal-img" style="width:100%;height:300px;background:var(--dark-surface);border-radius:16px 16px 0 0;display:flex;align-items:center;justify-content:center;"><i data-lucide="play-circle" style="width:64px;height:64px;color:rgba(255,255,255,0.5)"></i>
+    </div>
+    <div class="p-6">
+     <h3 id="video-modal-title" class="text-white font-bold text-lg mb-2"></h3>
+     <p id="video-modal-desc" class="text-gray-400 text-sm mb-4"></p>
+     <div class="flex items-center gap-4 text-sm text-gray-400 mb-4"><span id="video-modal-views"></span> <span id="video-modal-likes"></span>
+     </div>
+     <div class="flex gap-3"><button class="flex items-center gap-2 px-4 py-2 rounded-lg glass text-white text-sm transition hover:bg-white/10" id="video-like-btn" type="button"> <i data-lucide="heart" style="width:16px;height:16px;" id="video-like-icon"></i> <span id="video-like-text">Like</span> </button> <button class="flex items-center gap-2 px-4 py-2 rounded-lg glass text-white text-sm transition hover:bg-white/10" id="video-save-btn" type="button"> <i data-lucide="bookmark" style="width:16px;height:16px;"></i> Save </button> <button class="flex items-center gap-2 px-4 py-2 rounded-lg glass text-white text-sm transition hover:bg-white/10" id="video-share-btn" type="button"> <i data-lucide="share-2" style="width:16px;height:16px;"></i> Share </button>
+     </div>
+     <p id="video-share-msg" class="text-green-400 text-xs mt-2 hidden">Link gekopieerd!</p>
+    </div>
+   </div>
+  </div><!-- Auto Aanbod -->
+  <section id="aanbod" class="py-20 sm:py-24 px-6">
+   <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-8 fade-up">
+     <p data-template-id="aanbod-label" class="canva-text text-sm uppercase tracking-[0.2em] text-blue-400 mb-4"></p>
+     <h2 data-template-id="aanbod-title" class="canva-text text-3xl sm:text-4xl font-bold text-white mb-4"></h2>
+    </div><!-- Search + Filters -->
+    <div class="flex flex-col sm:flex-row flex-wrap gap-4 justify-center items-center mb-10 fade-up">
+     <div class="relative"><i data-lucide="search" style="width:16px;height:16px;position:absolute;left:12px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.35);"></i> <input type="text" id="car-search" class="search-input" placeholder="Zoek op naam..." aria-label="Zoek auto">
+     </div><select id="filter-brand" class="filter-select" aria-label="Filter op merk"><option value="">Alle merken</option><option value="BMW">BMW</option><option value="Mercedes">Mercedes-Benz</option><option value="Audi">Audi</option><option value="Volkswagen">Volkswagen</option><option value="Tesla">Tesla</option><option value="Range Rover">Range Rover</option></select> <select id="filter-fuel" class="filter-select" aria-label="Filter op brandstof"><option value="">Alle brandstof</option><option value="Benzine">Benzine</option><option value="Diesel">Diesel</option><option value="Elektrisch">Elektrisch</option><option value="Hybride">Hybride</option></select> <select id="filter-budget" class="filter-select" aria-label="Filter op budget"><option value="">Alle prijzen</option><option value="20000">Tot €20.000</option><option value="35000">Tot €35.000</option><option value="50000">Tot €50.000</option><option value="999999">€50.000+</option></select>
+    </div>
+    <div id="car-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"><!-- Car 1 -->
+     <div class="car-card card-hover fade-up" data-brand="BMW" data-fuel="Benzine" data-price="32950" data-car-id="0" data-template-id="car-1-card">
+      <div class="overflow-hidden relative"><img data-template-id="car-1-img" class="canva-image" loading="lazy"> <button class="fav-btn absolute top-3 right-3 w-9 h-9 rounded-full glass flex items-center justify-center text-white hover:text-red-400 transition" type="button" aria-label="Favoriet"><i data-lucide="heart" style="width:18px;height:18px;"></i></button>
+      </div>
+      <div class="p-5">
+       <h3 data-template-id="car-1-name" class="canva-text text-white font-bold text-lg mb-3"></h3>
+       <div class="grid grid-cols-2 gap-2 text-sm text-gray-400 mb-4"><span>📅 <span data-template-id="car-1-year" class="canva-text"></span></span> <span>⛽ <span data-template-id="car-1-fuel" class="canva-text"></span></span> <span>🛣️ <span data-template-id="car-1-km" class="canva-text"></span></span> <span>⚙️ <span data-template-id="car-1-trans" class="canva-text"></span></span>
+       </div>
+       <div class="flex items-center justify-between"><span data-template-id="car-1-price" class="canva-text text-xl font-bold text-blue-400"></span> <button data-template-id="car-1-btn" class="canva-button btn-primary !py-2 !px-5 text-sm" type="button"></button>
+       </div>
+      </div>
+     </div><!-- Car 2 -->
+     <div class="car-card card-hover fade-up" data-brand="Mercedes" data-fuel="Diesel" data-price="28500" data-car-id="1" data-template-id="car-2-card">
+      <div class="overflow-hidden relative"><img data-template-id="car-2-img" class="canva-image" loading="lazy"> <button class="fav-btn absolute top-3 right-3 w-9 h-9 rounded-full glass flex items-center justify-center text-white hover:text-red-400 transition" type="button" aria-label="Favoriet"><i data-lucide="heart" style="width:18px;height:18px;"></i></button>
+      </div>
+      <div class="p-5">
+       <h3 data-template-id="car-2-name" class="canva-text text-white font-bold text-lg mb-3"></h3>
+       <div class="grid grid-cols-2 gap-2 text-sm text-gray-400 mb-4"><span>📅 <span data-template-id="car-2-year" class="canva-text"></span></span> <span>⛽ <span data-template-id="car-2-fuel" class="canva-text"></span></span> <span>🛣️ <span data-template-id="car-2-km" class="canva-text"></span></span> <span>⚙️ <span data-template-id="car-2-trans" class="canva-text"></span></span>
+       </div>
+       <div class="flex items-center justify-between"><span data-template-id="car-2-price" class="canva-text text-xl font-bold text-blue-400"></span> <button data-template-id="car-2-btn" class="canva-button btn-primary !py-2 !px-5 text-sm" type="button"></button>
+       </div>
+      </div>
+     </div><!-- Car 3 -->
+     <div class="car-card card-hover fade-up" data-brand="Audi" data-fuel="Benzine" data-price="27990" data-car-id="2" data-template-id="car-3-card">
+      <div class="overflow-hidden relative"><img data-template-id="car-3-img" class="canva-image" loading="lazy"> <button class="fav-btn absolute top-3 right-3 w-9 h-9 rounded-full glass flex items-center justify-center text-white hover:text-red-400 transition" type="button" aria-label="Favoriet"><i data-lucide="heart" style="width:18px;height:18px;"></i></button>
+      </div>
+      <div class="p-5">
+       <h3 data-template-id="car-3-name" class="canva-text text-white font-bold text-lg mb-3"></h3>
+       <div class="grid grid-cols-2 gap-2 text-sm text-gray-400 mb-4"><span>📅 <span data-template-id="car-3-year" class="canva-text"></span></span> <span>⛽ <span data-template-id="car-3-fuel" class="canva-text"></span></span> <span>🛣️ <span data-template-id="car-3-km" class="canva-text"></span></span> <span>⚙️ <span data-template-id="car-3-trans" class="canva-text"></span></span>
+       </div>
+       <div class="flex items-center justify-between"><span data-template-id="car-3-price" class="canva-text text-xl font-bold text-blue-400"></span> <button data-template-id="car-3-btn" class="canva-button btn-primary !py-2 !px-5 text-sm" type="button"></button>
+       </div>
+      </div>
+     </div><!-- Car 4 -->
+     <div class="car-card card-hover fade-up" data-brand="Volkswagen" data-fuel="Benzine" data-price="18950" data-car-id="3" data-template-id="car-4-card">
+      <div class="overflow-hidden relative"><img data-template-id="car-4-img" class="canva-image" loading="lazy"> <button class="fav-btn absolute top-3 right-3 w-9 h-9 rounded-full glass flex items-center justify-center text-white hover:text-red-400 transition" type="button" aria-label="Favoriet"><i data-lucide="heart" style="width:18px;height:18px;"></i></button>
+      </div>
+      <div class="p-5">
+       <h3 data-template-id="car-4-name" class="canva-text text-white font-bold text-lg mb-3"></h3>
+       <div class="grid grid-cols-2 gap-2 text-sm text-gray-400 mb-4"><span>📅 <span data-template-id="car-4-year" class="canva-text"></span></span> <span>⛽ <span data-template-id="car-4-fuel" class="canva-text"></span></span> <span>🛣️ <span data-template-id="car-4-km" class="canva-text"></span></span> <span>⚙️ <span data-template-id="car-4-trans" class="canva-text"></span></span>
+       </div>
+       <div class="flex items-center justify-between"><span data-template-id="car-4-price" class="canva-text text-xl font-bold text-blue-400"></span> <button data-template-id="car-4-btn" class="canva-button btn-primary !py-2 !px-5 text-sm" type="button"></button>
+       </div>
+      </div>
+     </div><!-- Car 5 -->
+     <div class="car-card card-hover fade-up" data-brand="Tesla" data-fuel="Elektrisch" data-price="44990" data-car-id="4" data-template-id="car-5-card">
+      <div class="overflow-hidden relative"><img data-template-id="car-5-img" class="canva-image" loading="lazy"> <button class="fav-btn absolute top-3 right-3 w-9 h-9 rounded-full glass flex items-center justify-center text-white hover:text-red-400 transition" type="button" aria-label="Favoriet"><i data-lucide="heart" style="width:18px;height:18px;"></i></button>
+      </div>
+      <div class="p-5">
+       <h3 data-template-id="car-5-name" class="canva-text text-white font-bold text-lg mb-3"></h3>
+       <div class="grid grid-cols-2 gap-2 text-sm text-gray-400 mb-4"><span>📅 <span data-template-id="car-5-year" class="canva-text"></span></span> <span>⛽ <span data-template-id="car-5-fuel" class="canva-text"></span></span> <span>🛣️ <span data-template-id="car-5-km" class="canva-text"></span></span> <span>⚙️ <span data-template-id="car-5-trans" class="canva-text"></span></span>
+       </div>
+       <div class="flex items-center justify-between"><span data-template-id="car-5-price" class="canva-text text-xl font-bold text-blue-400"></span> <button data-template-id="car-5-btn" class="canva-button btn-primary !py-2 !px-5 text-sm" type="button"></button>
+       </div>
+      </div>
+     </div><!-- Car 6 -->
+     <div class="car-card card-hover fade-up" data-brand="Range Rover" data-fuel="Hybride" data-price="52990" data-car-id="5" data-template-id="car-6-card">
+      <div class="overflow-hidden relative"><img data-template-id="car-6-img" class="canva-image" loading="lazy"> <button class="fav-btn absolute top-3 right-3 w-9 h-9 rounded-full glass flex items-center justify-center text-white hover:text-red-400 transition" type="button" aria-label="Favoriet"><i data-lucide="heart" style="width:18px;height:18px;"></i></button>
+      </div>
+      <div class="p-5">
+       <h3 data-template-id="car-6-name" class="canva-text text-white font-bold text-lg mb-3"></h3>
+       <div class="grid grid-cols-2 gap-2 text-sm text-gray-400 mb-4"><span>📅 <span data-template-id="car-6-year" class="canva-text"></span></span> <span>⛽ <span data-template-id="car-6-fuel" class="canva-text"></span></span> <span>🛣️ <span data-template-id="car-6-km" class="canva-text"></span></span> <span>⚙️ <span data-template-id="car-6-trans" class="canva-text"></span></span>
+       </div>
+       <div class="flex items-center justify-between"><span data-template-id="car-6-price" class="canva-text text-xl font-bold text-blue-400"></span> <button data-template-id="car-6-btn" class="canva-button btn-primary !py-2 !px-5 text-sm" type="button"></button>
+       </div>
+      </div>
+     </div>
+    </div>
+    <p id="no-results" class="text-center text-gray-500 mt-8 hidden">Geen auto's gevonden met deze filters.</p>
+   </div>
+  </section><!-- Car Detail Modal -->
+  <div class="modal-overlay" id="car-modal">
+   <div class="modal-content"><button class="modal-close" onclick="closeModal('car-modal')" aria-label="Sluiten"><i data-lucide="x" style="width:18px;height:18px;"></i></button>
+    <div class="slider-wrap">
+     <div class="slider-track" id="car-slider-track"></div><button class="slider-btn" style="left:8px;" onclick="slideCarImg(-1)" aria-label="Vorige"><i data-lucide="chevron-left" style="width:20px;height:20px;"></i></button> <button class="slider-btn" style="right:8px;" onclick="slideCarImg(1)" aria-label="Volgende"><i data-lucide="chevron-right" style="width:20px;height:20px;"></i></button>
+    </div>
+    <div class="p-6">
+     <h3 id="car-modal-name" class="text-white font-bold text-2xl mb-2" style="font-family:'Playfair Display',serif;"></h3>
+     <p id="car-modal-price" class="text-blue-400 text-xl font-bold mb-4"></p>
+     <div class="grid grid-cols-2 gap-3 text-sm text-gray-400 mb-5" id="car-modal-specs"></div>
+     <p id="car-modal-desc" class="text-gray-400 text-sm mb-6"></p>
+     <div class="flex flex-wrap gap-3"><button class="btn-primary !py-3 !px-6 text-sm" type="button" onclick="carModalAction('contact')">📞 Neem Contact Op</button> <button class="btn-outline !py-3 !px-6 text-sm" type="button" onclick="carModalAction('plan')">📅 Plan Bezichtiging</button> <button class="btn-outline !py-3 !px-6 text-sm" type="button" onclick="carModalAction('save')">💾 Opslaan</button>
+     </div>
+     <p id="car-modal-msg" class="text-green-400 text-sm mt-3 hidden"></p>
+    </div>
+   </div>
+  </div><!-- Verkoop -->
+  <section id="verkoop" class="py-20 sm:py-24 px-6" style="background:var(--dark-card);">
+   <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-12 fade-up">
+     <p data-template-id="sell-label" class="canva-text text-sm uppercase tracking-[0.2em] text-blue-400 mb-4"></p>
+     <h2 data-template-id="sell-title" class="canva-text text-3xl sm:text-4xl font-bold text-white mb-4"></h2>
+     <p data-template-id="sell-subtitle" class="canva-text text-gray-400"></p>
+    </div>
+    <form id="sell-form" class="glass rounded-2xl p-6 sm:p-8 space-y-5 fade-up" novalidate>
+     <div class="grid sm:grid-cols-2 gap-5">
+      <div>
+       <label data-template-id="sell-name-label" for="sell-name" class="canva-text text-sm text-gray-300 mb-1 block"></label><input id="sell-name" type="text" class="form-input" required>
+      </div>
+      <div>
+       <label data-template-id="sell-email-label" for="sell-email" class="canva-text text-sm text-gray-300 mb-1 block"></label><input id="sell-email" type="email" class="form-input" required>
+      </div>
+     </div>
+     <div class="grid sm:grid-cols-2 gap-5">
+      <div>
+       <label data-template-id="sell-phone-label" for="sell-phone" class="canva-text text-sm text-gray-300 mb-1 block"></label><input id="sell-phone" type="tel" class="form-input">
+      </div>
+      <div>
+       <label data-template-id="sell-car-label" for="sell-car" class="canva-text text-sm text-gray-300 mb-1 block"></label><input id="sell-car" type="text" class="form-input" required>
+      </div>
+     </div>
+     <div>
+      <label data-template-id="sell-km-label" for="sell-km" class="canva-text text-sm text-gray-300 mb-1 block"></label><input id="sell-km" type="text" class="form-input">
+     </div>
+     <div>
+      <label data-template-id="sell-info-label" for="sell-info" class="canva-text text-sm text-gray-300 mb-1 block"></label><textarea id="sell-info" rows="3" class="form-input"></textarea>
+     </div><!-- Drag & Drop -->
+     <div><label class="text-sm text-gray-300 mb-1 block">Foto's uploaden</label>
+      <div class="drop-zone" id="sell-drop"><i data-lucide="upload-cloud" style="width:32px;height:32px;color:rgba(255,255,255,0.3);margin:0 auto;display:block;"></i>
+       <p class="text-gray-400 text-sm mt-2">Sleep foto's hierheen of klik om te selecteren</p><input type="file" id="sell-file" accept="image/*" multiple class="hidden">
+      </div>
+      <div id="sell-previews" class="flex flex-wrap gap-3 mt-3"></div>
+     </div><button type="submit" data-template-id="sell-submit" class="canva-button btn-primary w-full"></button>
+     <p id="sell-error" class="text-red-400 text-center hidden text-sm"></p>
+    </form>
+   </div>
+  </section><!-- Sell Success Modal -->
+  <div class="modal-overlay" id="sell-success-modal">
+   <div class="modal-content" style="max-width:420px;text-align:center;padding:3rem 2rem;">
+    <div style="font-size:4rem;margin-bottom:1rem;">
+     ✅
+    </div>
+    <h3 class="text-white text-2xl font-bold mb-2" style="font-family:'Playfair Display',serif;">Bedankt!</h3>
+    <p class="text-gray-400 mb-6">We hebben je aanvraag ontvangen en nemen zo snel mogelijk contact met je op.</p><button class="btn-primary" type="button" onclick="closeModal('sell-success-modal')">Sluiten</button>
+   </div>
+  </div><!-- Zoekservice Multi-step -->
+  <section id="zoekservice" class="py-20 sm:py-24 px-6">
+   <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-12 fade-up">
+     <p data-template-id="search-label" class="canva-text text-sm uppercase tracking-[0.2em] text-blue-400 mb-4"></p>
+     <h2 data-template-id="search-title" class="canva-text text-3xl sm:text-4xl font-bold text-white mb-4"></h2>
+     <p data-template-id="search-subtitle" class="canva-text text-gray-400"></p>
+    </div>
+    <div class="glass rounded-2xl p-6 sm:p-8 fade-up" id="search-wizard"><!-- Progress -->
+     <div class="flex items-center gap-2 mb-8">
+      <div class="step-dot w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" id="sdot-0">
+       1
+      </div>
+      <div class="flex-1 h-0.5 bg-white/10 rounded">
+       <div class="h-full bg-blue-500 rounded transition-all" id="sprog-1" style="width:0%"></div>
+      </div>
+      <div class="step-dot w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" id="sdot-1">
+       2
+      </div>
+      <div class="flex-1 h-0.5 bg-white/10 rounded">
+       <div class="h-full bg-blue-500 rounded transition-all" id="sprog-2" style="width:0%"></div>
+      </div>
+      <div class="step-dot w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" id="sdot-2">
+       3
+      </div>
+      <div class="flex-1 h-0.5 bg-white/10 rounded">
+       <div class="h-full bg-blue-500 rounded transition-all" id="sprog-3" style="width:0%"></div>
+      </div>
+      <div class="step-dot w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" id="sdot-3">
+       4
+      </div>
+     </div><!-- Step 1 -->
+     <div class="step-panel active" id="step-0">
+      <h3 class="text-white font-bold text-lg mb-4">Stap 1: Budget</h3><label data-template-id="search-budget-label" for="search-budget" class="canva-text text-sm text-gray-300 mb-1 block"></label> <select id="search-budget" class="filter-select w-full mb-6"><option value="">Selecteer budget</option><option value="15000">Tot €15.000</option><option value="25000">Tot €25.000</option><option value="40000">Tot €40.000</option><option value="60000">€40.000+</option></select> <button class="btn-primary w-full" type="button" onclick="nextStep()">Volgende →</button>
+     </div><!-- Step 2 -->
+     <div class="step-panel" id="step-1">
+      <h3 class="text-white font-bold text-lg mb-4">Stap 2: Merk</h3><label data-template-id="search-brand-label" for="search-brand-input" class="canva-text text-sm text-gray-300 mb-1 block"></label> <input id="search-brand-input" type="text" class="form-input mb-6" placeholder="bijv. BMW, Audi...">
+      <div class="flex gap-3"><button class="btn-outline flex-1" type="button" onclick="prevStep()">← Terug</button> <button class="btn-primary flex-1" type="button" onclick="nextStep()">Volgende →</button>
+      </div>
+     </div><!-- Step 3 -->
+     <div class="step-panel" id="step-2">
+      <h3 class="text-white font-bold text-lg mb-4">Stap 3: Wensen</h3><label data-template-id="search-wishes-label" for="search-wishes" class="canva-text text-sm text-gray-300 mb-1 block"></label> <textarea id="search-wishes" rows="3" class="form-input mb-6" placeholder="Automaat, sportief, zuinig..."></textarea>
+      <div class="flex gap-3"><button class="btn-outline flex-1" type="button" onclick="prevStep()">← Terug</button> <button class="btn-primary flex-1" type="button" onclick="submitSearch()">Zoeken 🔍</button>
+      </div>
+     </div><!-- Step 4: Results -->
+     <div class="step-panel" id="step-3">
+      <div id="search-loading" class="text-center py-12 hidden">
+       <div style="width:40px;height:40px;border:3px solid rgba(255,255,255,0.1);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto;"></div>
+       <p class="text-gray-400 mt-4">We zoeken de perfecte auto voor je...</p>
+      </div>
+      <div id="search-results" class="hidden">
+       <h3 class="text-white font-bold text-lg mb-4">🎉 Matches gevonden!</h3>
+       <div id="search-results-grid" class="space-y-4"></div><button class="btn-outline w-full mt-6" type="button" onclick="resetSearch()">Opnieuw zoeken</button>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <style>@keyframes spin{to{transform:rotate(360deg)}}</style><!-- Educatie / Blog -->
+  <section id="educatie" class="py-20 sm:py-24 px-6" style="background:var(--dark-card);">
+   <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12 fade-up">
+     <p data-template-id="blog-label" class="canva-text text-sm uppercase tracking-[0.2em] text-blue-400 mb-4"></p>
+     <h2 data-template-id="blog-title" class="canva-text text-3xl sm:text-4xl font-bold text-white mb-4"></h2>
+    </div><!-- Blog filters -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10 fade-up">
+     <div class="relative"><i data-lucide="search" style="width:16px;height:16px;position:absolute;left:12px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.35);"></i> <input type="text" id="blog-search" class="search-input" placeholder="Zoek artikel..." aria-label="Zoek blog">
+     </div>
+     <div class="flex gap-2 flex-wrap justify-center"><button class="blog-cat-btn px-4 py-2 rounded-full text-sm glass text-white transition hover:bg-white/10" data-cat="all" type="button">Alle</button> <button class="blog-cat-btn px-4 py-2 rounded-full text-sm glass text-white transition hover:bg-white/10" data-cat="verzekeringen" type="button">Verzekeringen</button> <button class="blog-cat-btn px-4 py-2 rounded-full text-sm glass text-white transition hover:bg-white/10" data-cat="onderhoud" type="button">Onderhoud</button> <button class="blog-cat-btn px-4 py-2 rounded-full text-sm glass text-white transition hover:bg-white/10" data-cat="elektrisch" type="button">Elektrisch</button> <button class="blog-cat-btn px-4 py-2 rounded-full text-sm glass text-white transition hover:bg-white/10" data-cat="tips" type="button">Tips</button>
+     </div>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8" id="blog-grid">
+     <div class="blog-card card-hover fade-up" data-blog-id="0" data-cat="verzekeringen">
+      <div class="overflow-hidden">
+       <img data-template-id="blog-1-img" class="canva-image" loading="lazy">
+      </div>
+      <div class="p-5">
+       <div class="flex items-center justify-between mb-2"><span data-template-id="blog-1-tag" class="canva-tag text-xs text-blue-400 uppercase tracking-wider"></span> <button class="blog-bookmark text-gray-500 hover:text-yellow-400 transition" type="button" aria-label="Bookmark"><i data-lucide="bookmark" style="width:16px;height:16px;"></i></button>
+       </div>
+       <h3 data-template-id="blog-1-title" class="canva-text text-white font-bold mt-1 mb-2"></h3>
+       <p data-template-id="blog-1-desc" class="canva-text text-gray-400 text-sm"></p>
+      </div>
+     </div>
+     <div class="blog-card card-hover fade-up" data-blog-id="1" data-cat="onderhoud">
+      <div class="overflow-hidden">
+       <img data-template-id="blog-2-img" class="canva-image" loading="lazy">
+      </div>
+      <div class="p-5">
+       <div class="flex items-center justify-between mb-2"><span data-template-id="blog-2-tag" class="canva-tag text-xs text-blue-400 uppercase tracking-wider"></span> <button class="blog-bookmark text-gray-500 hover:text-yellow-400 transition" type="button" aria-label="Bookmark"><i data-lucide="bookmark" style="width:16px;height:16px;"></i></button>
+       </div>
+       <h3 data-template-id="blog-2-title" class="canva-text text-white font-bold mt-1 mb-2"></h3>
+       <p data-template-id="blog-2-desc" class="canva-text text-gray-400 text-sm"></p>
+      </div>
+     </div>
+     <div class="blog-card card-hover fade-up" data-blog-id="2" data-cat="elektrisch">
+      <div class="overflow-hidden">
+       <img data-template-id="blog-3-img" class="canva-image" loading="lazy">
+      </div>
+      <div class="p-5">
+       <div class="flex items-center justify-between mb-2"><span data-template-id="blog-3-tag" class="canva-tag text-xs text-blue-400 uppercase tracking-wider"></span> <button class="blog-bookmark text-gray-500 hover:text-yellow-400 transition" type="button" aria-label="Bookmark"><i data-lucide="bookmark" style="width:16px;height:16px;"></i></button>
+       </div>
+       <h3 data-template-id="blog-3-title" class="canva-text text-white font-bold mt-1 mb-2"></h3>
+       <p data-template-id="blog-3-desc" class="canva-text text-gray-400 text-sm"></p>
+      </div>
+     </div>
+     <div class="blog-card card-hover fade-up" data-blog-id="3" data-cat="tips">
+      <div class="overflow-hidden">
+       <img data-template-id="blog-4-img" class="canva-image" loading="lazy">
+      </div>
+      <div class="p-5">
+       <div class="flex items-center justify-between mb-2"><span data-template-id="blog-4-tag" class="canva-tag text-xs text-blue-400 uppercase tracking-wider"></span> <button class="blog-bookmark text-gray-500 hover:text-yellow-400 transition" type="button" aria-label="Bookmark"><i data-lucide="bookmark" style="width:16px;height:16px;"></i></button>
+       </div>
+       <h3 data-template-id="blog-4-title" class="canva-text text-white font-bold mt-1 mb-2"></h3>
+       <p data-template-id="blog-4-desc" class="canva-text text-gray-400 text-sm"></p>
+      </div>
+     </div>
+    </div>
+    <p id="no-blogs" class="text-center text-gray-500 mt-8 hidden">Geen artikelen gevonden.</p>
+   </div>
+  </section><!-- Blog Modal -->
+  <div class="modal-overlay" id="blog-modal">
+   <div class="modal-content"><button class="modal-close" onclick="closeModal('blog-modal')" aria-label="Sluiten"><i data-lucide="x" style="width:18px;height:18px;"></i></button>
+    <div id="blog-modal-img" style="width:100%;height:250px;background:var(--dark-surface);border-radius:16px 16px 0 0;overflow:hidden;"></div>
+    <div class="p-6"><span id="blog-modal-tag" class="text-xs text-blue-400 uppercase tracking-wider"></span> <span id="blog-modal-read" class="text-xs text-gray-500 ml-3"></span>
+     <h3 id="blog-modal-title" class="text-white font-bold text-2xl mt-2 mb-4" style="font-family:'Playfair Display',serif;"></h3>
+     <div id="blog-modal-content" class="text-gray-400 text-sm leading-relaxed space-y-3"></div>
+    </div>
+   </div>
+  </div><!-- Waarom Appiah -->
+  <section class="py-20 sm:py-24 px-6">
+   <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 fade-up">
+     <p data-template-id="why-label" class="canva-text text-sm uppercase tracking-[0.2em] text-blue-400 mb-4"></p>
+     <h2 data-template-id="why-title" class="canva-text text-3xl sm:text-4xl font-bold text-white mb-4"></h2>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+     <div class="why-card fade-up">
+      <div class="text-blue-400 mb-4 flex justify-center">
+       <i data-lucide="shield-check" style="width:36px;height:36px;"></i>
+      </div>
+      <h4 data-template-id="why-1-title" class="canva-text text-white font-bold mb-2"></h4>
+      <p data-template-id="why-1-text" class="canva-text text-gray-400 text-sm"></p>
+     </div>
+     <div class="why-card fade-up">
+      <div class="text-blue-400 mb-4 flex justify-center">
+       <i data-lucide="award" style="width:36px;height:36px;"></i>
+      </div>
+      <h4 data-template-id="why-2-title" class="canva-text text-white font-bold mb-2"></h4>
+      <p data-template-id="why-2-text" class="canva-text text-gray-400 text-sm"></p>
+     </div>
+     <div class="why-card fade-up">
+      <div class="text-blue-400 mb-4 flex justify-center">
+       <i data-lucide="trending-up" style="width:36px;height:36px;"></i>
+      </div>
+      <h4 data-template-id="why-3-title" class="canva-text text-white font-bold mb-2"></h4>
+      <p data-template-id="why-3-text" class="canva-text text-gray-400 text-sm"></p>
+     </div>
+     <div class="why-card fade-up">
+      <div class="text-blue-400 mb-4 flex justify-center">
+       <i data-lucide="heart" style="width:36px;height:36px;"></i>
+      </div>
+      <h4 data-template-id="why-4-title" class="canva-text text-white font-bold mb-2"></h4>
+      <p data-template-id="why-4-text" class="canva-text text-gray-400 text-sm"></p>
+     </div>
+     <div class="why-card fade-up">
+      <div class="text-blue-400 mb-4 flex justify-center">
+       <i data-lucide="zap" style="width:36px;height:36px;"></i>
+      </div>
+      <h4 data-template-id="why-5-title" class="canva-text text-white font-bold mb-2"></h4>
+      <p data-template-id="why-5-text" class="canva-text text-gray-400 text-sm"></p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Reviews -->
+  <section id="reviews" class="py-20 sm:py-24 px-6" style="background:var(--dark-card);">
+   <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-16 fade-up">
+     <p data-template-id="review-label" class="canva-text text-sm uppercase tracking-[0.2em] text-blue-400 mb-4"></p>
+     <h2 data-template-id="review-title" class="canva-text text-3xl sm:text-4xl font-bold text-white mb-4"></h2>
+    </div>
+    <div class="relative overflow-hidden fade-up" id="review-container">
+     <div class="review-track" id="review-track">
+      <div class="review-slide">
+       <div class="glass rounded-2xl p-8 text-center"><img data-template-id="review-1-avatar" class="canva-image w-16 h-16 rounded-full mx-auto mb-4 object-cover" loading="lazy">
+        <div class="text-yellow-400 mb-3">
+         ★★★★★
+        </div>
+        <p data-template-id="review-1-text" class="canva-text text-gray-300 italic mb-4"></p>
+        <p data-template-id="review-1-name" class="canva-text text-white font-bold"></p>
+       </div>
+      </div>
+      <div class="review-slide">
+       <div class="glass rounded-2xl p-8 text-center"><img data-template-id="review-2-avatar" class="canva-image w-16 h-16 rounded-full mx-auto mb-4 object-cover" loading="lazy">
+        <div class="text-yellow-400 mb-3">
+         ★★★★★
+        </div>
+        <p data-template-id="review-2-text" class="canva-text text-gray-300 italic mb-4"></p>
+        <p data-template-id="review-2-name" class="canva-text text-white font-bold"></p>
+       </div>
+      </div>
+      <div class="review-slide">
+       <div class="glass rounded-2xl p-8 text-center"><img data-template-id="review-3-avatar" class="canva-image w-16 h-16 rounded-full mx-auto mb-4 object-cover" loading="lazy">
+        <div class="text-yellow-400 mb-3">
+         ★★★★★
+        </div>
+        <p data-template-id="review-3-text" class="canva-text text-gray-300 italic mb-4"></p>
+        <p data-template-id="review-3-name" class="canva-text text-white font-bold"></p>
+       </div>
+      </div>
+     </div>
+     <div class="flex justify-center gap-4 mt-6"><button id="rev-prev" class="glass rounded-full w-12 h-12 flex items-center justify-center text-white hover:bg-white/10 transition" aria-label="Vorige review"><i data-lucide="chevron-left" style="width:20px;height:20px;"></i></button> <button id="rev-next" class="glass rounded-full w-12 h-12 flex items-center justify-center text-white hover:bg-white/10 transition" aria-label="Volgende review"><i data-lucide="chevron-right" style="width:20px;height:20px;"></i></button>
+     </div>
+     <div class="rev-dots mt-4" id="rev-dots"></div>
+    </div>
+   </div>
+  </section><!-- CTA -->
+  <section id="contact" class="cta-section py-20 sm:py-24 px-6"><img data-template-id="cta-bg-img" class="canva-image cta-bg" loading="lazy">
+   <div class="relative z-10 max-w-3xl mx-auto text-center fade-up">
+    <h2 data-template-id="cta-title" class="canva-text text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6"></h2>
+    <p data-template-id="cta-subtitle" class="canva-text text-gray-300 mb-10 text-lg"></p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center"><a href="#verkoop" data-template-id="cta-btn-1" class="canva-button btn-primary"></a> <a href="#aanbod" data-template-id="cta-btn-2" class="canva-button btn-outline"></a>
+    </div>
+   </div>
+  </section><!-- Footer -->
+  <footer data-template-id="footer-section" class="canva-footer py-12 sm:py-16 px-6 border-t border-white/5">
+   <div class="max-w-7xl mx-auto">
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-10 sm:gap-12 mb-12">
+     <div>
+      <h3 data-template-id="footer-logo" class="canva-text text-xl font-bold text-white mb-4" style="font-family:'Playfair Display',serif;"></h3>
+      <p data-template-id="footer-desc" class="canva-text text-gray-400 text-sm"></p>
+     </div>
+     <div>
+      <h4 data-template-id="footer-nav-title" class="canva-text text-white font-bold mb-4"></h4>
+      <nav class="flex flex-col gap-2"><a href="#about" class="text-gray-400 text-sm hover:text-white transition">Over Ons</a> <a href="#aanbod" class="text-gray-400 text-sm hover:text-white transition">Aanbod</a> <a href="#content" class="text-gray-400 text-sm hover:text-white transition">Content</a> <a href="#educatie" class="text-gray-400 text-sm hover:text-white transition">Educatie</a>
+      </nav>
+     </div>
+     <div>
+      <h4 data-template-id="footer-services-title" class="canva-text text-white font-bold mb-4"></h4>
+      <nav class="flex flex-col gap-2"><a href="#verkoop" class="text-gray-400 text-sm hover:text-white transition">Auto Verkopen</a> <a href="#zoekservice" class="text-gray-400 text-sm hover:text-white transition">Auto Zoeken</a> <a href="#contact" class="text-gray-400 text-sm hover:text-white transition">Contact</a>
+      </nav>
+     </div>
+     <div>
+      <h4 data-template-id="footer-contact-title" class="canva-text text-white font-bold mb-4"></h4>
+      <p data-template-id="footer-email" class="canva-text text-gray-400 text-sm mb-2"></p>
+      <p data-template-id="footer-phone" class="canva-text text-gray-400 text-sm mb-4"></p>
+      <div class="flex gap-3"><a href="#" class="text-gray-400 hover:text-blue-400 transition"><i data-lucide="instagram" style="width:20px;height:20px;"></i></a> <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i data-lucide="youtube" style="width:20px;height:20px;"></i></a> <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i data-lucide="facebook" style="width:20px;height:20px;"></i></a>
+      </div>
+     </div>
+    </div><!-- Newsletter -->
+    <div class="glass rounded-xl p-6 mb-10 flex flex-col sm:flex-row items-center gap-4">
+     <p data-template-id="footer-newsletter-text" class="canva-text text-white font-bold text-sm flex-1"></p>
+     <form id="newsletter-form" class="flex gap-2 w-full sm:w-auto"><input type="email" class="form-input !py-2 flex-1 sm:w-64" placeholder="je@email.nl" required id="newsletter-email"> <button type="submit" class="btn-primary !py-2 !px-6 text-sm whitespace-nowrap">Aanmelden</button>
+     </form>
+    </div>
+    <p id="newsletter-msg" class="text-green-400 text-sm text-center hidden mb-4">✓ Bedankt voor je aanmelding!</p>
+    <div class="border-t border-white/5 pt-8">
+     <p class="text-center text-gray-500 text-sm mb-4"><span data-template-id="footer-partner" class="canva-text"></span></p>
+     <p data-template-id="footer-copy" class="canva-text text-gray-500 text-sm text-center"></p>
+    </div>
+   </div>
+  </footer><!-- Back to top --> <button id="back-to-top" aria-label="Terug naar boven"><i data-lucide="arrow-up" style="width:22px;height:22px;"></i></button>
+  <script src="/_sdk/editing_sdk.js"></script>
+  <script>
+/* ── DATA ── */
+const carData = [
+  {id:0, name:'BMW 4 Serie Coupé', price:'€32.950', year:'2021', fuel:'Benzine', km:'45.000 km', trans:'Automaat', desc:'Prachtige BMW 4 Serie in uitstekende staat. Volledig dealer onderhouden, sportpakket, LED koplampen, navigatie en leren interieur.'},
+  {id:1, name:'Mercedes-Benz C-Klasse', price:'€28.500', year:'2020', fuel:'Diesel', km:'62.000 km', trans:'Automaat', desc:'Stijlvolle C-Klasse met AMG pakket. Zuinig diesel, camera, stoelverwarming, adaptieve cruise control.'},
+  {id:2, name:'Audi A5 Sportback', price:'€27.990', year:'2021', fuel:'Benzine', km:'38.000 km', trans:'Automaat', desc:'Sportieve A5 met S-Line uitvoering. Virtual cockpit, B&O audio, matrix LED.'},
+  {id:3, name:'Volkswagen Golf GTI', price:'€18.950', year:'2022', fuel:'Benzine', km:'21.000 km', trans:'Handgeschakeld', desc:'Iconische GTI met 245 pk. Digital cockpit, sportonderstel, Harman Kardon.'},
+  {id:4, name:'Tesla Model 3 Long Range', price:'€44.990', year:'2023', fuel:'Elektrisch', km:'15.000 km', trans:'Automaat', desc:'Tesla Model 3 LR met 614 km bereik. Autopilot, premium interieur, wit.'},
+  {id:5, name:'Range Rover Evoque P300e', price:'€52.990', year:'2022', fuel:'Hybride', km:'28.000 km', trans:'Automaat', desc:'Luxe plug-in hybride SUV. Panoramadak, Meridian audio, adaptive dynamics.'}
+];
+
+const videoData = [
+  {title:'Welke verzekering past bij jouw auto?', desc:'In deze video leggen we alles uit over WA, allrisk en meer. Kies de juiste verzekering en bespaar geld.', views:'24K views', likes:1820},
+  {title:'Beste producten voor auto onderhoud', desc:'Top 5 auto detailing producten die elke autoliefhebber moet hebben.', views:'18K views', likes:1340},
+  {title:'Tips voor beginnende bestuurders', desc:'Net je rijbewijs? Dit moet je weten over je eerste auto en eerste ritten.', views:'31K views', likes:2450},
+  {title:'Waar moet je op letten bij aankoop?', desc:'De belangrijkste checkpunten bij het kopen van een tweedehands auto.', views:'12K views', likes:890}
+];
+
+const blogData = [
+  {id:0, cat:'verzekeringen', tag:'Verzekeringen', title:'De Juiste Autoverzekering Kiezen', desc:'Alles wat je moet weten over WA, all-risk en meer.', read:'5 min', content:'<p>Een goede autoverzekering is essentieel. WA-verzekering is verplicht en dekt schade die jij aan anderen veroorzaakt. Maar is dat genoeg?</p><p>Allrisk biedt volledige dekking, inclusief eigen schade. Voor nieuwere auto\'s is dit vaak aan te raden. Vergelijk altijd meerdere aanbieders en let op het eigen risico.</p><p>Bij Appiah Automotive helpen we je graag met advies over de beste verzekering voor jouw situatie.</p>'},
+  {id:1, cat:'onderhoud', tag:'Onderhoud', title:'Auto Onderhoud Basisgids', desc:'Bespaar geld met deze essentiële onderhoudstips.', read:'4 min', content:'<p>Regelmatig onderhoud verlengt de levensduur van je auto en voorkomt dure reparaties. Controleer maandelijks je bandenspanning, oliepeil en koelvloeistof.</p><p>Plan grote beurten volgens het schema van de fabrikant. Vergeet de remmen niet — ze zijn letterlijk van levensbelang.</p><p>Een schone auto roest minder snel. Was je auto regelmatig, vooral in de winter.</p>'},
+  {id:2, cat:'elektrisch', tag:'Elektrisch', title:'Elektrisch Rijden: Wat Kost Het?', desc:'Een eerlijke vergelijking tussen elektrisch en benzine.', read:'6 min', content:'<p>Elektrisch rijden wordt steeds betaalbaarder. De aanschafprijs is hoger, maar je bespaart op brandstof, onderhoud en wegenbelasting.</p><p>Thuis laden kost gemiddeld €0,25 per kWh. Bij een verbruik van 18 kWh/100km rijd je voor nog geen €5 per 100 km. Vergelijk dat met €12+ voor benzine.</p><p>De batterijgarantie is meestal 8 jaar of 160.000 km. Na die tijd heeft de batterij nog 70-80% capaciteit.</p>'},
+  {id:3, cat:'tips', tag:'Tips', title:'Beste Eerste Auto\'s in 2025', desc:'Top keuzes voor beginnende bestuurders op elk budget.', read:'5 min', content:'<p>Als beginner wil je een betrouwbare, zuinige auto met lage verzekeringskosten. De Volkswagen Polo, Toyota Yaris en Opel Corsa zijn uitstekende keuzes.</p><p>Kijk naar auto\'s met een klein motorvolume (1.0-1.4L) voor lagere verzekeringspremies. Automatisch is comfortabeler, maar handgeschakeld is goedkoper.</p><p>Budget onder €10.000? Overweeg een Peugeot 208, Renault Clio of Ford Fiesta van 2-3 jaar oud.</p>'}
+];
+
+/* ── SMOOTH SCROLL ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+/* ── NAVBAR ── */
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+  document.getElementById('back-to-top').classList.toggle('show', window.scrollY > 600);
+});
+
+/* ── MOBILE MENU ── */
+const mobileMenu = document.getElementById('mobile-menu');
+document.getElementById('menu-btn').addEventListener('click', () => mobileMenu.classList.add('open'));
+document.getElementById('menu-close').addEventListener('click', () => mobileMenu.classList.remove('open'));
+document.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', e => {
+  e.preventDefault();
+  mobileMenu.classList.remove('open');
+  const t = document.querySelector(l.getAttribute('href'));
+  if(t) setTimeout(() => t.scrollIntoView({behavior:'smooth'}), 300);
+}));
+
+/* ── HERO PARALLAX (desktop) ── */
+if(window.matchMedia('(min-width:768px)').matches) {
+  document.addEventListener('mousemove', e => {
+    const img = document.getElementById('hero-bg-img');
+    if(!img) return;
+    const x = (e.clientX / window.innerWidth - 0.5) * 20;
+    const y = (e.clientY / window.innerHeight - 0.5) * 20;
+    img.style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
+  });
+}
+
+/* ── SCROLL REVEAL ── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+}, {threshold:0.1});
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+/* ── ANIMATED COUNTERS ── */
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(!e.isIntersecting) return;
+    const el = e.target;
+    const target = parseInt(el.dataset.target);
+    const suffix = el.id === 'counter-2' ? 'K+' : el.id === 'counter-1' || el.id === 'counter-3' ? '+' : '';
+    let current = 0;
+    const step = Math.ceil(target / 60);
+    const timer = setInterval(() => {
+      current += step;
+      if(current >= target) { current = target; clearInterval(timer); }
+      if(el.id === 'counter-4') el.textContent = (current/10).toFixed(1) + '★';
+      else el.textContent = current + suffix;
+    }, 30);
+    counterObserver.unobserve(el);
+  });
+}, {threshold:0.5});
+document.querySelectorAll('[id^="counter-"]').forEach(el => counterObserver.observe(el));
+
+/* ── VIDEO MODAL ── */
+let videoLiked = {};
+document.querySelectorAll('.content-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const id = parseInt(card.dataset.videoId);
+    const v = videoData[id];
+    document.getElementById('video-modal-title').textContent = v.title;
+    document.getElementById('video-modal-desc').textContent = v.desc;
+    document.getElementById('video-modal-views').textContent = '👁 ' + v.views;
+    document.getElementById('video-modal-likes').textContent = '❤️ ' + (v.likes + (videoLiked[id]?1:0));
+    document.getElementById('video-like-btn').dataset.id = id;
+    document.getElementById('video-share-msg').classList.add('hidden');
+    openModal('video-modal');
+  });
+});
+document.getElementById('video-like-btn').addEventListener('click', function(){
+  const id = parseInt(this.dataset.id);
+  videoLiked[id] = !videoLiked[id];
+  const v = videoData[id];
+  document.getElementById('video-modal-likes').textContent = '❤️ ' + (v.likes + (videoLiked[id]?1:0));
+  const icon = document.getElementById('video-like-icon');
+  icon.style.color = videoLiked[id] ? '#ef4444' : '';
+  icon.classList.add('like-anim');
+  setTimeout(() => icon.classList.remove('like-anim'), 400);
+});
+document.getElementById('video-share-btn').addEventListener('click', () => {
+  document.getElementById('video-share-msg').classList.remove('hidden');
+  setTimeout(() => document.getElementById('video-share-msg').classList.add('hidden'), 2000);
+});
+
+/* ── CAR FILTERS ── */
+function filterCars() {
+  const brand = document.getElementById('filter-brand').value;
+  const fuel = document.getElementById('filter-fuel').value;
+  const budget = document.getElementById('filter-budget').value;
+  const search = document.getElementById('car-search').value.toLowerCase();
+  const cards = document.querySelectorAll('#car-grid .car-card');
+  let visible = 0;
+  cards.forEach(card => {
+    let show = true;
+    if(brand && card.dataset.brand !== brand) show = false;
+    if(fuel && card.dataset.fuel !== fuel) show = false;
+    if(budget) {
+      const price = parseInt(card.dataset.price);
+      const max = parseInt(budget);
+      if(budget === '999999') { if(price < 50000) show = false; }
+      else if(price > max) show = false;
+    }
+    if(search) {
+      const name = card.querySelector('h3').textContent.toLowerCase();
+      if(!name.includes(search)) show = false;
+    }
+    if(show) { card.style.display = ''; card.style.opacity = '1'; card.style.position = ''; visible++; }
+    else { card.style.display = 'none'; }
+  });
+  document.getElementById('no-results').classList.toggle('hidden', visible > 0);
+}
+['filter-brand','filter-fuel','filter-budget'].forEach(id => document.getElementById(id).addEventListener('change', filterCars));
+document.getElementById('car-search').addEventListener('input', filterCars);
+
+/* ── FAVORITE ── */
+document.querySelectorAll('.fav-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const icon = btn.querySelector('i');
+    btn.classList.toggle('text-red-400');
+    btn.classList.toggle('text-white');
+    icon.classList.add('like-anim');
+    setTimeout(() => icon.classList.remove('like-anim'), 400);
+  });
+});
+
+/* ── CAR DETAIL MODAL ── */
+let carSliderIdx = 0;
+let carSliderImages = [];
+
+document.querySelectorAll('.car-card [data-template-id$="-btn"]').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    openCarDetail(btn.closest('.car-card'));
+  });
+});
+document.querySelectorAll('.car-card').forEach(card => {
+  card.addEventListener('click', e => {
+    if(e.target.closest('.fav-btn')) return;
+    openCarDetail(card);
+  });
+});
+
+function openCarDetail(card) {
+  const id = parseInt(card.dataset.carId);
+  const c = carData[id];
+  const img = card.querySelector('img');
+  const imgSrc = img ? img.src : '';
+  carSliderImages = [imgSrc, imgSrc, imgSrc]; // simulate multiple images
+  carSliderIdx = 0;
+  const track = document.getElementById('car-slider-track');
+  track.innerHTML = carSliderImages.map(s => `<img src="${s}" alt="${c.name}" style="min-width:100%;height:300px;object-fit:cover;" loading="lazy">`).join('');
+  track.style.transform = 'translateX(0)';
+  document.getElementById('car-modal-name').textContent = c.name;
+  document.getElementById('car-modal-price').textContent = c.price;
+  document.getElementById('car-modal-specs').innerHTML = `
+    <span>📅 Bouwjaar: ${c.year}</span><span>⛽ Brandstof: ${c.fuel}</span>
+    <span>🛣️ Km-stand: ${c.km}</span><span>⚙️ Transmissie: ${c.trans}</span>`;
+  document.getElementById('car-modal-desc').textContent = c.desc;
+  document.getElementById('car-modal-msg').classList.add('hidden');
+  openModal('car-modal');
+  lucide.createIcons();
+}
+function slideCarImg(dir) {
+  carSliderIdx = (carSliderIdx + dir + carSliderImages.length) % carSliderImages.length;
+  document.getElementById('car-slider-track').style.transform = `translateX(-${carSliderIdx * 100}%)`;
+}
+function carModalAction(type) {
+  const msg = document.getElementById('car-modal-msg');
+  const texts = {contact:'We nemen zo snel mogelijk contact met je op!', plan:'Bezichtiging is aangevraagd!', save:'Auto is opgeslagen!'};
+  msg.textContent = '✓ ' + texts[type];
+  msg.classList.remove('hidden');
+  setTimeout(() => msg.classList.add('hidden'), 3000);
+}
+
+/* ── SELL FORM ── */
+const dropZone = document.getElementById('sell-drop');
+const fileInput = document.getElementById('sell-file');
+const previews = document.getElementById('sell-previews');
+
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
+fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+
+function handleFiles(files) {
+  Array.from(files).forEach(f => {
+    if(!f.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const div = document.createElement('div');
+      div.className = 'relative w-20 h-20 rounded-lg overflow-hidden';
+      div.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover"><button type="button" class="absolute top-0 right-0 bg-red-500 text-white w-5 h-5 rounded-full text-xs flex items-center justify-center" onclick="this.parentElement.remove()">×</button>`;
+      previews.appendChild(div);
+    };
+    reader.readAsDataURL(f);
+  });
+}
+
+document.getElementById('sell-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const form = e.target;
+  const name = form.querySelector('#sell-name').value.trim();
+  const email = form.querySelector('#sell-email').value.trim();
+  const car = form.querySelector('#sell-car').value.trim();
+  const errEl = document.getElementById('sell-error');
+  if(!name || !email || !car) {
+    errEl.textContent = 'Vul alle verplichte velden in.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+  if(!/\S+@\S+\.\S+/.test(email)) {
+    errEl.textContent = 'Voer een geldig e-mailadres in.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+  errEl.classList.add('hidden');
+  form.reset();
+  previews.innerHTML = '';
+  openModal('sell-success-modal');
+});
+
+/* ── SEARCH WIZARD ── */
+let searchStep = 0;
+function updateStepUI() {
+  document.querySelectorAll('.step-panel').forEach((p,i) => p.classList.toggle('active', i === searchStep));
+  for(let i = 0; i < 4; i++) {
+    const dot = document.getElementById('sdot-'+i);
+    dot.style.background = i <= searchStep ? 'var(--accent)' : 'rgba(255,255,255,0.1)';
+    dot.style.color = i <= searchStep ? '#fff' : 'rgba(255,255,255,0.4)';
+  }
+  for(let i = 1; i <= 3; i++) {
+    document.getElementById('sprog-'+i).style.width = searchStep >= i ? '100%' : '0%';
+  }
+}
+updateStepUI();
+function nextStep() { if(searchStep < 3) { searchStep++; updateStepUI(); } }
+function prevStep() { if(searchStep > 0) { searchStep--; updateStepUI(); } }
+function submitSearch() {
+  searchStep = 3;
+  updateStepUI();
+  document.getElementById('search-loading').classList.remove('hidden');
+  document.getElementById('search-results').classList.add('hidden');
+  setTimeout(() => {
+    document.getElementById('search-loading').classList.add('hidden');
+    const grid = document.getElementById('search-results-grid');
+    const matches = carData.slice(0,3);
+    grid.innerHTML = matches.map(c => `
+      <div class="glass rounded-xl p-4 flex items-center gap-4">
+        <div class="w-16 h-16 rounded-lg bg-blue-500/20 flex items-center justify-center text-2xl">🚗</div>
+        <div class="flex-1">
+          <p class="text-white font-bold">${c.name}</p>
+          <p class="text-gray-400 text-sm">${c.year} · ${c.fuel} · ${c.km}</p>
+        </div>
+        <span class="text-blue-400 font-bold">${c.price}</span>
+      </div>`).join('');
+    document.getElementById('search-results').classList.remove('hidden');
+  }, 2000);
+}
+function resetSearch() {
+  searchStep = 0;
+  updateStepUI();
+}
+
+/* ── BLOG FILTERS ── */
+let activeBlogCat = 'all';
+document.querySelectorAll('.blog-cat-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    activeBlogCat = btn.dataset.cat;
+    document.querySelectorAll('.blog-cat-btn').forEach(b => b.style.background = b.dataset.cat === activeBlogCat ? 'var(--accent)' : '');
+    filterBlogs();
+  });
+});
+document.getElementById('blog-search').addEventListener('input', filterBlogs);
+
+function filterBlogs() {
+  const search = document.getElementById('blog-search').value.toLowerCase();
+  const cards = document.querySelectorAll('#blog-grid .blog-card');
+  let visible = 0;
+  cards.forEach(card => {
+    const cat = card.dataset.cat;
+    const title = card.querySelector('h3').textContent.toLowerCase();
+    let show = true;
+    if(activeBlogCat !== 'all' && cat !== activeBlogCat) show = false;
+    if(search && !title.includes(search)) show = false;
+    card.style.display = show ? '' : 'none';
+    if(show) visible++;
+  });
+  document.getElementById('no-blogs').classList.toggle('hidden', visible > 0);
+}
+
+/* Blog bookmark */
+document.querySelectorAll('.blog-bookmark').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    btn.classList.toggle('bookmarked');
+    const icon = btn.querySelector('i');
+    icon.classList.add('like-anim');
+    setTimeout(() => icon.classList.remove('like-anim'), 400);
+  });
+});
+
+/* Blog modal */
+document.querySelectorAll('.blog-card').forEach(card => {
+  card.addEventListener('click', e => {
+    if(e.target.closest('.blog-bookmark')) return;
+    const id = parseInt(card.dataset.blogId);
+    const b = blogData[id];
+    const img = card.querySelector('img');
+    document.getElementById('blog-modal-img').innerHTML = img ? `<img src="${img.src}" style="width:100%;height:100%;object-fit:cover;" alt="${b.title}">` : '';
+    document.getElementById('blog-modal-tag').textContent = b.tag;
+    document.getElementById('blog-modal-read').textContent = '📖 ' + b.read + ' leestijd';
+    document.getElementById('blog-modal-title').textContent = b.title;
+    document.getElementById('blog-modal-content').innerHTML = b.content;
+    openModal('blog-modal');
+  });
+});
+
+/* ── REVIEW CAROUSEL ── */
+let revIdx = 0;
+const track = document.getElementById('review-track');
+const slides = track.querySelectorAll('.review-slide');
+const dotsContainer = document.getElementById('rev-dots');
+
+// Create dots
+slides.forEach((_, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'rev-dot' + (i === 0 ? ' active' : '');
+  dot.addEventListener('click', () => goReview(i));
+  dot.setAttribute('aria-label', 'Review ' + (i+1));
+  dotsContainer.appendChild(dot);
+});
+
+function goReview(i) {
+  revIdx = (i + slides.length) % slides.length;
+  track.style.transform = `translateX(-${revIdx * 100}%)`;
+  dotsContainer.querySelectorAll('.rev-dot').forEach((d,j) => d.classList.toggle('active', j === revIdx));
+}
+document.getElementById('rev-prev').addEventListener('click', () => goReview(revIdx - 1));
+document.getElementById('rev-next').addEventListener('click', () => goReview(revIdx + 1));
+
+// Auto-play
+let revAutoPlay = setInterval(() => goReview(revIdx + 1), 5000);
+document.getElementById('review-container').addEventListener('mouseenter', () => clearInterval(revAutoPlay));
+document.getElementById('review-container').addEventListener('mouseleave', () => { revAutoPlay = setInterval(() => goReview(revIdx + 1), 5000); });
+
+// Touch swipe
+let touchStartX = 0;
+document.getElementById('review-container').addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
+document.getElementById('review-container').addEventListener('touchend', e => {
+  const diff = touchStartX - e.changedTouches[0].clientX;
+  if(Math.abs(diff) > 50) goReview(revIdx + (diff > 0 ? 1 : -1));
+}, {passive:true});
+
+/* ── NEWSLETTER ── */
+document.getElementById('newsletter-form').addEventListener('submit', e => {
+  e.preventDefault();
+  document.getElementById('newsletter-email').value = '';
+  document.getElementById('newsletter-msg').classList.remove('hidden');
+  setTimeout(() => document.getElementById('newsletter-msg').classList.add('hidden'), 3000);
+});
+
+/* ── BACK TO TOP ── */
+document.getElementById('back-to-top').addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+/* ── MODAL HELPERS ── */
+function openModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; lucide.createIcons(); }
+function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = ''; }
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if(e.target === m) closeModal(m.id); });
+});
+
+/* ── INIT ── */
+lucide.createIcons();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fa49b344215910e',t:'MTc3ODUzODM5Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
